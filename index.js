@@ -212,6 +212,9 @@ function runCmake (target, runtime, opts, cb) {
     if(opts.parallel) {
       args.push('--parallel=' + opts.parallel)
     }
+    if(opts['cmake-target']) {
+      args.push('--target=' + opts['cmake-target'])
+    }
 
     if (runtime !== 'napi') args.push('--runtime-version=' + target)
     args.push('--arch=' + opts.arch)

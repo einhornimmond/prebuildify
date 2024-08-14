@@ -104,6 +104,8 @@ Options can be provided via (in order of precedence) the programmatic API, the C
 | `--quiet`            | -                    | `false`                        | Suppress `node-gyp` output
 | `--cwd`              | -                    | `process.cwd()`                | Working directory
 | `--backend`          | -                    | `node-gyp`                     | The build backend to use, e.g. `cmake-js`
+| `--cmake-target`     | -                    | -                              | Target which cmake should build, build all if not set
+| `--parallel`         | -                    | 1                              | Thread Count for cmake build, use $(nproc) for building across all cores/threads
 
 \* A target takes the form of `(runtime@)?version`, where `runtime` defaults to `'node'`. For example: `-t 8.14.0 -t electron@3.0.0`. At least one of `--target`, `--all` or `--napi` must be specified.
 
