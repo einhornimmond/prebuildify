@@ -209,6 +209,9 @@ function runCmake (target, runtime, opts, cb) {
       'rebuild',
       '--out=' + opts.output
     ]
+    if(opts.parallel) {
+      args.push('--parallel=' + opts.parallel)
+    }
 
     if (runtime !== 'napi') args.push('--runtime-version=' + target)
     args.push('--arch=' + opts.arch)
