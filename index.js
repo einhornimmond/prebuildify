@@ -62,7 +62,7 @@ function prebuildify (opts, cb) {
   if (opts.arch === 'ia32' && opts.platform === 'linux' && opts.arch !== os.arch()) {
     opts.env.CFLAGS = '-m32'
   }
-  if (opts.arch === 'wins32') {
+  if (opts.platform === 'win32') {
     opts.output = path.join(opts.output, opts.debug ? 'Debug' : 'Release')
   }
 
