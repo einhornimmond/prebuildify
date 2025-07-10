@@ -62,9 +62,6 @@ function prebuildify (opts, cb) {
   if (opts.arch === 'ia32' && opts.platform === 'linux' && opts.arch !== os.arch()) {
     opts.env.CFLAGS = '-m32'
   }
-  if (opts.platform === 'win32') {
-    opts.output = path.join(opts.output, opts.debug ? 'Debug' : 'Release')
-  }
 
   // Since npm@5.6.0 npm adds its bundled node-gyp to PATH, taking precedence
   // over the local .bin folder. Counter that by (again) adding .bin to PATH.
@@ -241,8 +238,11 @@ function runCmake (target, runtime, opts, cb) {
 
     child.on('exit', function (code) {
       if (code) return cb(spawnError('cmake-js', code))
-
-      findBuild(opts.output, function (err, output) {
+      let output = opts.output
+      if (opts.platform === 'win32') {
+        output = path.join(output, opts.debug ? 'Debug' : 'Release')
+      }
+      findBuild(output, function (err, output) {
         if (err) return cb(err)
 
         strip(output, opts, function (err) {
