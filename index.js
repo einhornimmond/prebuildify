@@ -62,6 +62,9 @@ function prebuildify (opts, cb) {
   if (opts.arch === 'ia32' && opts.platform === 'linux' && opts.arch !== os.arch()) {
     opts.env.CFLAGS = '-m32'
   }
+  if (opts.arch === 'wins32') {
+    opts.output = path.join(opts.output, opts.debug ? 'Debug' : 'Release')
+  }
 
   // Since npm@5.6.0 npm adds its bundled node-gyp to PATH, taking precedence
   // over the local .bin folder. Counter that by (again) adding .bin to PATH.
