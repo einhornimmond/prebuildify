@@ -93,8 +93,11 @@ function loop (opts, cb) {
 
       run(opts.postinstall, opts, function (err) {
         if (err) return cb(err)
-
-        copySharedLibs(opts.output, opts.builds, opts, function (err) {
+        let output = opts.output
+        if (opts.platform === 'win32' && opts.backend === 'cmake-js') {
+          output = path.join(opts.output, opts.debug ? 'Debug' : 'Release')
+        }
+        copySharedLibs(output, opts.builds, opts, function (err) {
           if (err) return cb(err)
 
           var name = prebuildName(next, opts)
@@ -229,7 +232,6 @@ function runCmake (target, runtime, opts, cb) {
       args.push(arg)
     }
 
-    console.log(args);
     var child = proc.spawn(cmakeJsPath, args, {
       cwd: opts.cwd,
       env: opts.env,
